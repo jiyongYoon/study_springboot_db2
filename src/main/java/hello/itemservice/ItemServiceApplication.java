@@ -29,6 +29,8 @@ public class ItemServiceApplication {
 		return new TestDataInit(itemRepository);
 	}
 
+
+/*
 	// JVM에 Embedded Mode DB를 사용하도록 세팅
 	@Bean
 	@Profile("test")
@@ -41,5 +43,6 @@ public class ItemServiceApplication {
 		dataSource.setPassword("");
 		return dataSource;
 	}
+*/
 
 }

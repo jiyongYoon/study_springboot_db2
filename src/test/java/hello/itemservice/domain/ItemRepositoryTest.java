@@ -11,18 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional // Test에 사용되면 테스트가 수행된 후 롤백이 적용됨
 @SpringBootTest // @SpringbootApplication을 찾아서 해당 설정을 사용함.
 class ItemRepositoryTest {
 
     @Autowired
     ItemRepository itemRepository;
 
+/*
     @Autowired
     PlatformTransactionManager transactionManager;
     TransactionStatus status;
@@ -32,6 +36,7 @@ class ItemRepositoryTest {
         // 트랜잭션 시작
         status = transactionManager.getTransaction(new DefaultTransactionDefinition());
     }
+*/
 
     @AfterEach
     void afterEach() {
@@ -40,9 +45,14 @@ class ItemRepositoryTest {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
         // 트랜잭션 롤백
-        transactionManager.rollback(status);
+//        transactionManager.rollback(status);
     }
 
+/*
+    이렇게 붙여주면 해당 메서드의 트랜잭션은 Commit이 진행되게 할 수 있다.
+    @Transactional
+    @Commit
+*/
     @Test
     void save() {
         //given

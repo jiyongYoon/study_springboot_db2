@@ -30,6 +30,11 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0' // boot가 관리하는 패키지는 호환이 잘 되는 버전을 알아서 찾지만, 아닌 것들은 이렇게 버전을 명시해주는 것이 필요함.
 	// JPA 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Querydsl 추가
+	implementation 'com.querydsl:querydsl-jpa'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 	//H2 db 추가
 	runtimeOnly 'com.h2database:h2'
 
@@ -44,4 +49,9 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Querydsl 추가, 자동 생성된 Q클래스 gradle clean으로 제거
+clean {
+	delete file('src/main/generated')
 }
